@@ -1,11 +1,19 @@
 import React from "react";
-import { TextField } from "@material-ui/core";
+import {
+  TextField,
+  FormControl,
+  FormLabel,
+  RadioGroup,
+  FormControlLabel,
+  Radio,
+} from "@material-ui/core";
 import useStyles from "./styles";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../domain/entity/rootState";
 import { Profile } from "../domain/entity/profile";
 import { profileActions } from "../store/profile/actions";
 import { PROFILE } from "../domain/services/profile";
+import { Gender } from "../domain/entity/gender";
 
 export const Basic = () => {
   const classes = useStyles();
@@ -34,6 +42,24 @@ export const Basic = () => {
         value={profile.description}
         onChange={(e) => handleChange({ description: e.target.value })}
       />
+      <FormControl className={classes.formField}>
+        <FormLabel>{PROFILE.GENDER}</FormLabel>
+        <RadioGroup
+          value={profile.gender}
+          onChange={(e) => handleChange({ gender: e.target.value as Gender })}
+        >
+          <FormControlLabel
+            value="male"
+            label="Male"
+            control={<Radio color="primary" />}
+          ></FormControlLabel>
+          <FormControlLabel
+            value="female"
+            label="Female"
+            control={<Radio color="primary" />}
+          ></FormControlLabel>
+        </RadioGroup>
+      </FormControl>
     </>
   );
 };
