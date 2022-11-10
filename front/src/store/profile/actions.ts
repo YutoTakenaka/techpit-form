@@ -8,4 +8,4 @@ export const profileActions = {
   setProfile: actionCreator<Partial<Profile>>("SET_PROFILE"),
   setAddress: actionCreator<Partial<Address>>("SET_ADDRESS"),
 };
-// Partial<T>はTという型の部分集合という意味
+// Partial<T>はTという型の部分集合という意味=つまり一部分だけ受け取っている

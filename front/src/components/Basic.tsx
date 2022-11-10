@@ -6,6 +6,7 @@ import {
   RadioGroup,
   FormControlLabel,
   Radio,
+  Typography,
 } from "@material-ui/core";
 import useStyles from "./styles";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,6 +15,7 @@ import { Profile } from "../domain/entity/profile";
 import { profileActions } from "../store/profile/actions";
 import { PROFILE } from "../domain/services/profile";
 import { Gender } from "../domain/entity/gender";
+import { Address } from "./Address";
 
 export const Basic = () => {
   const classes = useStyles();
@@ -71,6 +73,15 @@ export const Basic = () => {
           shrink: true,
         }}
       />
+      <Typography
+        variant="h4"
+        component="h2"
+        className={classes.title}
+        color="primary"
+      >
+        Address
+      </Typography>
+      <Address />
     </>
   );
 };

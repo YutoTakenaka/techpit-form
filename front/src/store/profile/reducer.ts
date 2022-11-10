@@ -10,7 +10,7 @@ const initial: Profile = {
   birthday: "",
   gender: "",
   address: {
-    postalcode: "",
+    postalCode: "",
     prefecture: "",
     city: "",
     restAddress: "",
