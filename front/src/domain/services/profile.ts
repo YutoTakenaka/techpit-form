@@ -9,4 +9,9 @@ export const PROFILE = {
     CITY: "City",
     RESTARRESS: "Rest Address",
   },
+  CAREERS: {
+    COMPANY: "Company",
+    POSITION: "Position",
+    SPAN: "Span",
+  },
 };

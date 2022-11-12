@@ -16,6 +16,7 @@ import { profileActions } from "../store/profile/actions";
 import { PROFILE } from "../domain/services/profile";
 import { Gender } from "../domain/entity/gender";
 import { Address } from "./Address";
+import { Career } from "./Career";
 
 export const Basic = () => {
   const classes = useStyles();
@@ -82,6 +83,15 @@ export const Basic = () => {
         Address
       </Typography>
       <Address />
+      <Typography
+        variant="h4"
+        component="h2"
+        className={classes.title}
+        color="primary"
+      >
+        Work history
+      </Typography>
+      <Career />
     </>
   );
 };
