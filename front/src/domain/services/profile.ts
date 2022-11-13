@@ -14,4 +14,9 @@ export const PROFILE = {
     POSITION: "Position",
     SPAN: "Span",
   },
+  COLLEGE: {
+    NAME: "College",
+    FACULTY: "Faculty",
+    DEPARTMENT: "Department",
+  },
 };
