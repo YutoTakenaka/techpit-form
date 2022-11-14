@@ -17,6 +17,8 @@ import useStyles from "./styles";
 import { College as ICollege } from "../domain/entity/college";
 import { profileActions } from "../store/profile/actions";
 import { PROFILE } from "../domain/services/profile";
+import { calculateValidation } from "../domain/services/validation";
+import { validationActions } from "../store/validation/actions";
 
 export const College = () => {
   const dispatch = useDispatch();
@@ -35,6 +37,7 @@ export const College = () => {
 
   const handleCollegeChange = (member: Partial<ICollege>) => {
     dispatch(profileActions.setCollege(member));
+    recalculateValidation(member);
   };
 
   const handleReset = () => {
@@ -50,6 +53,17 @@ export const College = () => {
   const selectedFaculty = selectedCollege?.faculty.filter(
     (faculty) => faculty.name === profile.college.faculty
   )[0];
+
+  const recalculateValidation = (member: Partial<ICollege>) => {
+    if (!validation.isStartValidation) return;
+
+    const newProfile = {
+      ...profile,
+      college: { ...profile.college, ...member },
+    };
+    const message = calculateValidation(newProfile);
+    dispatch(validationActions.setValidation(message));
+  };
 
   return (
     <>

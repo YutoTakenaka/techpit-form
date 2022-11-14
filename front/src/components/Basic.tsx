@@ -16,6 +16,8 @@ import { Profile } from "../domain/entity/profile";
 import { profileActions } from "../store/profile/actions";
 import { PROFILE } from "../domain/services/profile";
 import { Gender } from "../domain/entity/gender";
+import { calculateValidation } from "../domain/services/validation";
+import { validationActions } from "../store/validation/actions";
 
 export const Basic = () => {
   const classes = useStyles();
@@ -25,6 +27,18 @@ export const Basic = () => {
 
   const handleChange = (member: Partial<Profile>) => {
     dispatch(profileActions.setProfile(member));
+    recalculateValidation(member);
+  };
+
+  const recalculateValidation = (member: Partial<Profile>) => {
+    if (!validation.isStartValidation) return;
+
+    const newProfile = {
+      ...profile,
+      ...member,
+    };
+    const message = calculateValidation(newProfile);
+    dispatch(validationActions.setValidation(message));
   };
 
   return (

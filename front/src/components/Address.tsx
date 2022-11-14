@@ -7,6 +7,9 @@ import { RootState } from "../domain/entity/rootState";
 import { Address as IAddress } from "../domain/entity/address"; // IはinterfaceのI
 import { profileActions } from "../store/profile/actions";
 import { isPostalCode } from "../domain/services/address";
+import { Profile } from "../domain/entity/profile";
+import { calculateValidation } from "../domain/services/validation";
+import { validationActions } from "../store/validation/actions";
 import { searchAddressFromPostalCode } from "../store/profile/effects";
 
 export const Address = () => {
@@ -17,12 +20,27 @@ export const Address = () => {
 
   const handleAddressChange = (member: Partial<IAddress>) => {
     dispatch(profileActions.setAddress(member));
+    recalculateValidation({ address: { ...profile.address, ...member } });
   };
 
   const handlePostalCodeChange = (code: string) => {
     if (!isPostalCode(code)) return;
     dispatch(profileActions.setAddress({ postalCode: code }));
     dispatch(searchAddressFromPostalCode(code));
+    recalculateValidation({
+      address: { ...profile.address, postalCode: code },
+    });
+  };
+
+  const recalculateValidation = (member: Partial<Profile>) => {
+    if (!validation.isStartValidation) return;
+
+    const newProfile = {
+      ...profile,
+      ...member,
+    };
+    const message = calculateValidation(newProfile);
+    dispatch(validationActions.setValidation(message));
   };
   return (
     <>
