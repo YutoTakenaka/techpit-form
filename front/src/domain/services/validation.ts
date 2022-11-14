@@ -58,3 +58,15 @@ const facultyValidation = (college: College) =>
   college.name && college.faculty
     ? ""
     : `${PROFILE.COLLEGE.FACULTY}を入力してください`;
+
+export const isValid = (message: Validation) => {
+  const flattenValues = Object.values(message)
+    .map(extractValues)
+    .flat() as string[];
+  return flattenValues.every((flattenValue) => !flattenValue);
+};
+
+const extractValues = (object: any): any[] | string => {
+  if (typeof object === "string") return object;
+  return Object.values(object).map(extractValues);
+};

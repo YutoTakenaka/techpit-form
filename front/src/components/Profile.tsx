@@ -5,12 +5,13 @@ import { Basic } from "./Basic";
 import useStyles from "./styles";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../domain/entity/rootState";
-import { calculateValidation } from "../domain/services/validation";
+import { calculateValidation, isValid } from "../domain/services/validation";
 import { validationActions } from "../store/validation/actions";
 import { Address } from "./Address";
 import { College } from "./College";
 import { Career } from "./Career";
 import { Validation } from "../domain/entity/validation";
+import { alertActions } from "../store/alert/actions";
 
 export const Profile = () => {
   const classes = useStyles();
@@ -19,8 +20,24 @@ export const Profile = () => {
 
   const handleSave = () => {
     const message: Validation = calculateValidation(profile);
+
+    if (isValid(message)) {
+      dispatch(
+        alertActions.openAlert({
+          severity: "success",
+          message: "saved!",
+        })
+      );
+      return;
+    }
     dispatch(validationActions.setValidation(message));
     dispatch(validationActions.setIsStartValidation(true));
+    dispatch(
+      alertActions.openAlert({
+        severity: "error",
+        message: "error!",
+      })
+    );
   };
 
   return (
