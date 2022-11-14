@@ -16,11 +16,11 @@ import { exitEmptyCareers } from "../domain/services/career";
 
 export const Career = () => {
   const classes = useStyles();
-
   const dispatch = useDispatch();
   const careers: ICareer[] = useSelector(
     (state: RootState) => state.profile.careers
   );
+  const validation = useSelector((state: RootState) => state.validation);
 
   const canAddCareer: boolean = exitEmptyCareers(careers);
 
@@ -49,6 +49,8 @@ export const Career = () => {
             label={PROFILE.CAREERS.COMPANY}
             value={career.company}
             onChange={(e) => handleChange({ company: e.target.value }, i)}
+            error={!!validation.message.careers[i]?.company}
+            helperText={validation.message.careers[i]?.company}
           />
           <TextField
             className={classes.formField}
@@ -56,6 +58,8 @@ export const Career = () => {
             label={PROFILE.CAREERS.POSITION}
             value={career.position}
             onChange={(e) => handleChange({ position: e.target.value }, i)}
+            error={!!validation.message.careers[i]?.position}
+            helperText={validation.message.careers[i]?.position}
           />
           <div className={classes.careerSpan}>
             <InputLabel shrink>{PROFILE.CAREERS.SPAN}</InputLabel>
@@ -74,6 +78,8 @@ export const Career = () => {
                   }}
                   value={career.startAt}
                   onChange={(e) => handleChange({ startAt: e.target.value }, i)}
+                  error={!!validation.message.careers[i]?.startAt}
+                  helperText={validation.message.careers[i]?.startAt}
                 />
               </Grid>
               <Grid item xs={2}>
@@ -88,6 +94,8 @@ export const Career = () => {
                   }}
                   value={career.endAt}
                   onChange={(e) => handleChange({ endAt: e.target.value }, i)}
+                  error={!!validation.message.careers[i]?.endAt}
+                  helperText={validation.message.careers[i]?.endAt}
                 />
               </Grid>
             </Grid>

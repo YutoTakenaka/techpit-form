@@ -26,9 +26,9 @@ export const calculateValidation = (profile: Profile) => {
       ),
     },
     college: {
-      faculty: "",
+      faculty: facultyValidation(profile.college),
     },
-    careers: [],
+    careers: careerValidation(profile.careers),
   };
 
   return message;
@@ -45,3 +45,16 @@ const lengthValidation = (target: string, maxLen: number) =>
 // 必須項目
 const emptyValidation = (target: string, col: string) =>
   isEmpty(target) ? `${col}を入力してください。` : "";
+
+const careerValidation = (careers: Career[]) =>
+  careers.map((career) => ({
+    company: emptyValidation(career.company, PROFILE.CAREERS.COMPANY),
+    position: emptyValidation(career.position, PROFILE.CAREERS.POSITION),
+    startAt: emptyValidation(career.startAt, PROFILE.CAREERS.START_AT),
+    endAt: emptyValidation(career.endAt, PROFILE.CAREERS.END_AT),
+  }));
+
+const facultyValidation = (college: College) =>
+  college.name && college.faculty
+    ? ""
+    : `${PROFILE.COLLEGE.FACULTY}を入力してください`;

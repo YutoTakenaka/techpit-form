@@ -13,6 +13,8 @@ export const PROFILE = {
     COMPANY: "Company",
     POSITION: "Position",
     SPAN: "Span",
+    START_AT: "Start at",
+    END_AT: "End at",
   },
   COLLEGE: {
     NAME: "College",

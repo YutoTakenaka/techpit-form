@@ -1,6 +1,7 @@
 import {
   Button,
   FormControl,
+  FormHelperText,
   Grid,
   InputLabel,
   MenuItem,
@@ -22,6 +23,7 @@ export const College = () => {
   const colleges = useSelector((state: RootState) => state.college);
   const profile = useSelector((state: RootState) => state.profile);
   const classes = useStyles();
+  const validation = useSelector((state: RootState) => state.validation);
 
   const handleChange = (name: string) => {
     dispatch(collegeActions.setSearchWord(name));
@@ -105,15 +107,18 @@ export const College = () => {
                 })
               }
             >
-              {selectedCollege.faculty.map((faculty) => (
+              {selectedCollege?.faculty.map((faculty) => (
                 <MenuItem key={faculty.name} value={faculty.name}>
                   {faculty.name}
                 </MenuItem>
               ))}
             </Select>
+            <FormHelperText>
+              {validation.message.college.faculty}
+            </FormHelperText>
           </FormControl>
           {selectedFaculty?.department.length > 0 && (
-            <FormControl fullWidth className={classes.formField}>
+            <FormControl fullWidth className={classes.formField} required>
               <InputLabel>{PROFILE.COLLEGE.DEPARTMENT}</InputLabel>
               <Select
                 value={profile.college.department}
