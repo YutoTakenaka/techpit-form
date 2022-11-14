@@ -7,6 +7,7 @@ import {
   FormControlLabel,
   Radio,
   Typography,
+  FormHelperText,
 } from "@material-ui/core";
 import useStyles from "./styles";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,14 +16,12 @@ import { Profile } from "../domain/entity/profile";
 import { profileActions } from "../store/profile/actions";
 import { PROFILE } from "../domain/services/profile";
 import { Gender } from "../domain/entity/gender";
-import { Address } from "./Address";
-import { Career } from "./Career";
-import { College } from "./College";
 
 export const Basic = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const profile = useSelector((state: RootState) => state.profile);
+  const validation = useSelector((state: RootState) => state.validation);
 
   const handleChange = (member: Partial<Profile>) => {
     dispatch(profileActions.setProfile(member));
@@ -36,6 +35,9 @@ export const Basic = () => {
         label={PROFILE.NAME}
         value={profile.name}
         onChange={(e) => handleChange({ name: e.target.value })}
+        required
+        error={!!validation.message.name}
+        helperText={validation.message.name}
       />
       <TextField
         fullWidth
@@ -45,8 +47,14 @@ export const Basic = () => {
         label={PROFILE.DESCRIPTION}
         value={profile.description}
         onChange={(e) => handleChange({ description: e.target.value })}
+        error={!!validation.message.description}
+        helperText={validation.message.description}
       />
-      <FormControl className={classes.formField}>
+      <FormControl
+        className={classes.formField}
+        required
+        error={!!validation.message.gender}
+      >
         <FormLabel>{PROFILE.GENDER}</FormLabel>
         <RadioGroup
           value={profile.gender}
@@ -63,6 +71,7 @@ export const Basic = () => {
             control={<Radio color="primary" />}
           ></FormControlLabel>
         </RadioGroup>
+        <FormHelperText>{validation.message.gender}</FormHelperText>
       </FormControl>
       <TextField
         fullWidth
@@ -74,34 +83,10 @@ export const Basic = () => {
         InputLabelProps={{
           shrink: true,
         }}
+        required
+        error={!!validation.message.birthday}
+        helperText={validation.message.birthday}
       />
-      <Typography
-        variant="h4"
-        component="h2"
-        className={classes.title}
-        color="primary"
-      >
-        Address
-      </Typography>
-      <Address />
-      <Typography
-        variant="h4"
-        component="h2"
-        className={classes.title}
-        color="primary"
-      >
-        Educational background
-      </Typography>
-      <College />
-      <Typography
-        variant="h4"
-        component="h2"
-        className={classes.title}
-        color="primary"
-      >
-        Work history
-      </Typography>
-      <Career />
     </>
   );
 };
